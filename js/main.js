@@ -1,0 +1,1 @@
+const btnStrength = document.getElementById("btnStrength")
