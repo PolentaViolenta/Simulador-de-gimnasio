@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f4f4f4;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.day-btn {
+    background: #ddd;
+    border: none;
+    padding: 10px;
+}
+
+#routineContainer, #myRoutine {
+    margin-top: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+}
+
+.user-day {
+    margin: 5px 0;
+}
+
+.btn {
+    margin-left: 10px;
+    padding: 5px 8px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: #bb2d3b;
+    color: white;
+    border: none;
+}
+
+.btn-edit {
+    background: #0d6efd;
+    color: white;
+    border: none;
+}

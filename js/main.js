@@ -1,167 +1,170 @@
-const btnStrength = document.getElementById("btnStrength"); 
+const btnStrength = document.getElementById("btnStrength");
 const btnVolume = document.getElementById("btnVolume");
-
-const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 const daysContainer = document.getElementById("daysContainer");
 const routineContainer = document.getElementById("routineContainer");
-const userRoutineList = document.getElementById("userRoutine")
+const userRoutineList = document.getElementById("userRoutine");
 
-let selectedTraining = null;
+const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
-const strengthExcercises = [
+const strengthExercises = [
     { name: "Sentadilla", reps: "6 x 4" },
-    { name: "Press de banca", reps: "6 x 4"},
-    { name: "Peso muerto", reps: "6 x 4"}
+    { name: "Press de banca", reps: "6 x 4" },
+    { name: "Peso muerto", reps: "6 x 4" }
 ];
 
-const volumeExcercises = [
-    { name: "Aperturas", reps: "12 x 4"},
-    { name: "Press inclinado", reps: "10 x 4"},
-    { name: "Extensiones de tríceps", reps: "15 x 3"}
+const volumeExercises = [
+    { name: "Aperturas", reps: "12 x 4" },
+    { name: "Press inclinado", reps: "10 x 4" },
+    { name: "Extensiones de tríceps", reps: "15 x 3" }
 ];
 
 let userRoutine = JSON.parse(localStorage.getItem("userRoutine")) || [];
-renderUserRoutine();
-
-function showRoutine(excercises) {
-    routineContainer.innerHTML = "";
-    excercises.forEach(ex => {
-        const item = document.createElement("p");
-        item.textContent = `${ex.name} - ${ex.reps}`;
-        routineContainer.appendChild(item);
-    });
-}
+let selectedTraining = null;
 
 function showDays() {
-    daysContainer.innerHTML = ""; 
+    daysContainer.innerHTML = "";
     daysOfWeek.forEach(day => {
-        const button = document.createElement("button");
-        button.textContent = day;
-        button.classList.add("day-btn");
-        button.addEventListener("click", () => selectDay(day));
-        daysContainer.appendChild(button);
+        const btn = document.createElement("button");
+        btn.textContent = day;
+        btn.classList.add("day-btn");
+        btn.addEventListener("click", () => selectDay(day));
+        daysContainer.appendChild(btn);
     });
 }
-
 
 btnStrength.addEventListener("click", () => {
     selectedTraining = "strength";
     showDays();
-    routineContainer.innerHTML = ""; 
+    routineContainer.innerHTML = "";
 });
-
 
 btnVolume.addEventListener("click", () => {
     selectedTraining = "volume";
     showDays();
-    routineContainer.innerHTML = ""; 
+    routineContainer.innerHTML = "";
 });
 
 function selectDay(day) {
-
     routineContainer.innerHTML = `<h3>Día seleccionado: ${day}</h3>`;
 
-    let selectedExercises = [];
-    
+    let exercises = [];
+
     if (selectedTraining === "strength") {
-        selectedExercises = strengthExcercises;
-        showRoutine(strengthExcercises);
+        exercises = strengthExercises;
     } else if (selectedTraining === "volume") {
-        selectedExercises = volumeExcercises;
-        showRoutine(volumeExcercises);
+        exercises = volumeExercises;
     } else {
-        routineContainer.innerHTML += `<p style="color:#b00">Seleccioná primero un tipo de rutina (Fuerza o Volumen).</p>`;
+        routineContainer.innerHTML += `<p>Elegí primero Fuerza o Volumen.</p>`;
         return;
     }
 
+    const select = document.createElement("select");
+    select.id = "exerciseSelect";
+
+    exercises.forEach(ex => {
+        const option = document.createElement("option");
+        option.value = ex.name;
+        option.textContent = `${ex.name} (${ex.reps})`;
+        select.appendChild(option);
+    });
+
+    routineContainer.appendChild(select);
+
     const addBtn = document.createElement("button");
-    addBtn.textContent = "Agregar a mi rutina";
+    addBtn.textContent = "Agregar ejercicio";
     addBtn.addEventListener("click", () => {
-        addToUserRoutine(day, selectedExercises);
+        const selectedName = select.value;
+        const selectedExercise = exercises.find(ex => ex.name === selectedName);
+        addExercise(day, selectedExercise);
     });
 
     routineContainer.appendChild(addBtn);
 }
 
-function addToUserRoutine(day,excercises) {
-    const dayRoutine = {
-        day: day,
-        excercises: excercises
+function addExercise(day, exercise) {
+    let dayEntry = userRoutine.find(entry => entry.day === day);
+
+    if (!dayEntry) {
+        dayEntry = { day: day, exercises: [] };
+        userRoutine.push(dayEntry);
     }
 
-    const existingIndex = userRoutine.findIndex(entry => entry.day === day);
+    const exists = dayEntry.exercises.some(ex => ex.name === exercise.name);
 
-    if (existingIndex !== -1) {
-        userRoutine[existingIndex] = dayRoutine;
-    } else {
-        userRoutine.push(dayRoutine);
+    if (exists) {
+        alert("Ese ejercicio ya está agregado en este día.");
+        return;
     }
 
-    saveUserRoutine();
-    renderUserRoutine();
+    dayEntry.exercises.push(exercise);
+
+    saveRoutine();
+    renderRoutine();
 }
 
-function renderUserRoutine() {
+function saveRoutine() {
+    localStorage.setItem("userRoutine", JSON.stringify(userRoutine));
+}
+
+function renderRoutine() {
     userRoutineList.innerHTML = "";
 
-    if(userRoutine.length === 0) {
+    if (userRoutine.length === 0) {
         userRoutineList.innerHTML = "<li>No tenés días guardados aún.</li>";
         return;
     }
 
-    userRoutine.forEach((enty, index) => {
+    userRoutine.forEach((entry, index) => {
         const li = document.createElement("li");
         li.classList.add("user-day");
-        li.dataset.index = index;
 
         li.innerHTML = `
             <strong>${entry.day}</strong>:
             ${entry.exercises.map(ex => `${ex.name} (${ex.reps})`).join(", ")}
-            <button class="btn small btn-edit" data-index="${index}" title="Editar">Editar</button>
-            <button class="btn small btn-delete" data-index="${index}" title="Eliminar">Eliminar</button>
+            <button class="btn btn-edit" data-index="${index}">Editar</button>
+            <button class="btn btn-delete" data-index="${index}">Eliminar</button>
         `;
-        
+
         userRoutineList.appendChild(li);
     });
 
-    userRoutine.onclick = (e) => {
+    userRoutineList.onclick = (e) => {
         const btn = e.target.closest("button");
-        if(!btn) return;
-        const idx = Number(btn.dataset.index);
+        if (!btn) return;
+
+        const index = Number(btn.dataset.index);
+
         if (btn.classList.contains("btn-edit")) {
-            startEditDay(idx);
+            editDay(index);
+        }
+
+        if (btn.classList.contains("btn-delete")) {
+            deleteDay(index);
         }
     };
 }
 
-function deleteDayRoutine(index) {
-
+function deleteDay(index) {
     userRoutine.splice(index, 1);
-    saveUserRoutine();
-    renderUserRoutine();
+    saveRoutine();
+    renderRoutine();
 }
 
-
-function startEditDay(index) {
+function editDay(index) {
     const entry = userRoutine[index];
     if (!entry) return;
 
-
-    const firstName = entry.exercises[0]?.name || "";
-    const strengthNames = strengthExcercises.map(e => e.name);
-    const isStrength = strengthNames.includes(firstName);
+    const firstExercise = entry.exercises[0]?.name || "";
+    const isStrength = strengthExercises.map(e => e.name).includes(firstExercise);
 
     selectedTraining = isStrength ? "strength" : "volume";
 
-
     showDays();
-
     selectDay(entry.day);
 
-    routineContainer.insertAdjacentHTML('afterbegin', `<p style="color:#166534">Estás editando <strong>${entry.day}</strong>. Cambiá lo que quieras y presioná "Agregar a mi rutina" para guardar.</p>`);
+    routineContainer.insertAdjacentHTML("afterbegin",
+        `<p style="color:green">Estás editando <strong>${entry.day}</strong>.</p>`
+    );
 }
 
-
-function saveUserRoutine() {
-    localStorage.setItem("userRoutine", JSON.stringify(userRoutine));
-}
+renderRoutine();
