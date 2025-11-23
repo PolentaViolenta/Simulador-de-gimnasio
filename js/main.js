@@ -109,7 +109,7 @@ function renderUserRoutine() {
         return;
     }
 
-    userRoutine.forEach((enty.index) => {
+    userRoutine.forEach((enty, index) => {
         const li = document.createElement("li");
         li.classList.add("user-day");
         li.dataset.index = index;
