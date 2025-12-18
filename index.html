@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Simulador Gym</title>
@@ -8,33 +8,32 @@
 <body>
 
 <header class="index-header">
-    <h1>💪 GymMaster - Simulador de Rutinas 💪</h1>
+    <h1>Simulador de Rutinas Gym</h1>
     <a href="pages/login.html" class="login-btn">Login</a>
 </header>
 
 <main class="menu">
-    <a href="pages/strength.html" class="menu-item">
+    <a href="pages/strength.html">
         <img src="img/strength.png" alt="Fuerza">
-        <span>Fuerza</span>
+        <span>Rutinas de Fuerza</span>
     </a>
 
-    <a href="pages/volume.html" class="menu-item">
+    <a href="pages/volume.html">
         <img src="img/volume.png" alt="Volumen">
-        <span>Volumen</span>
+        <span>Rutinas de Volumen</span>
     </a>
 
-    <a href="pages/routines.html" class="menu-item">
+    <a href="pages/routines.html">
         <img src="img/routines.png" alt="Rutinas">
-        <span>Rutinas</span>
+        <span>Mis Rutinas Guardadas</span>
     </a>
 </main>
 
-<script>
-const user = localStorage.getItem("user");
-if (user) {
-    console.log(`Usuario logueado: ${user}`);
-}
-</script>
+<footer>
+    <a href="https://x.com"><img src="img/x.png" alt="X"></a>
+    <a href="https://facebook.com"><img src="img/facebook.png" alt="Facebook"></a>
+    <a href="https://instagram.com"><img src="img/instagram.png" alt="Instagram"></a>
+</footer>
 
 </body>
 </html>
