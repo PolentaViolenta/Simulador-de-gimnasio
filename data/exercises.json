@@ -1,0 +1,84 @@
+{
+  "strength": {
+    "pecho": [
+      { "name": "Press banca", "reps": "6x4", "secondary": ["triceps", "hombros"] },
+      { "name": "Press inclinado", "reps": "6x4", "secondary": ["triceps", "hombros"] },
+      { "name": "Fondos", "reps": "5x5", "secondary": ["triceps", "core"] }
+    ],
+
+    "espalda": [
+      { "name": "Dominadas", "reps": "6x4", "secondary": ["biceps", "antebrazo"] },
+      { "name": "Remo con barra", "reps": "6x4", "secondary": ["biceps", "core"] },
+      { "name": "Peso muerto", "reps": "5x5", "secondary": ["piernas", "core"] }
+    ],
+
+    "piernas": [
+      { "name": "Sentadilla", "reps": "6x4", "secondary": ["core"] },
+      { "name": "Prensa", "reps": "6x4", "secondary": [] },
+      { "name": "Zancadas", "reps": "6x3", "secondary": ["core"] }
+    ],
+
+    "triceps": [
+      { "name": "Press cerrado", "reps": "6x4", "secondary": ["pecho"] },
+      { "name": "Fondos banco", "reps": "6x4", "secondary": [] }
+    ],
+
+    "biceps": [
+      { "name": "Curl barra", "reps": "6x4", "secondary": ["antebrazo"] },
+      { "name": "Curl alterno", "reps": "6x4", "secondary": [] }
+    ],
+
+    "antebrazo": [
+      { "name": "Curl muñeca", "reps": "8x4", "secondary": [] }
+    ],
+
+    "core": [
+      { "name": "Plancha", "reps": "30s x 4", "secondary": [] },
+      { "name": "Crunch", "reps": "15x4", "secondary": [] }
+    ],
+
+    "hombros": [
+      { "name": "Press militar", "reps": "6x4", "secondary": ["triceps"] },
+      { "name": "Elevaciones laterales", "reps": "10x4", "secondary": [] }
+    ]
+  },
+
+  "volume": {
+    "pecho": [
+      { "name": "Aperturas", "reps": "12x4", "secondary": ["hombros"] },
+      { "name": "Press mancuernas", "reps": "10x4", "secondary": ["triceps"] }
+    ],
+
+    "espalda": [
+      { "name": "Jalón al pecho", "reps": "12x4", "secondary": ["biceps"] },
+      { "name": "Remo máquina", "reps": "12x4", "secondary": ["biceps"] }
+    ],
+
+    "piernas": [
+      { "name": "Extensión de piernas", "reps": "15x4", "secondary": [] },
+      { "name": "Curl femoral", "reps": "15x4", "secondary": [] },
+      { "name": "Gemelos", "reps": "20x4", "secondary": [] }
+    ],
+
+    "triceps": [
+      { "name": "Extensión polea", "reps": "15x4", "secondary": [] }
+    ],
+
+    "biceps": [
+      { "name": "Curl polea", "reps": "12x4", "secondary": ["antebrazo"] }
+    ],
+
+    "antebrazo": [
+      { "name": "Agarre estático", "reps": "30s x 3", "secondary": [] }
+    ],
+
+    "core": [
+      { "name": "Ab wheel", "reps": "10x3", "secondary": [] }
+    ],
+
+    "hombros": [
+      { "name": "Pájaros", "reps": "15x4", "secondary": [] }
+    ]
+  }
+}
+

@@ -1,35 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de rutinas Gym</title>
+    <title>Simulador Gym</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <h1>Simulador de Gimnasio</h1>
-        <p>Elige el tipo de rutina y arma tu plantilla de entrenamiento.</p>
-    </header>
 
-    <main>
-        <h2>Selecciona el tipo de rutina</h2>
-        <button id="btnStrength">Fuerza</button>
-        <button id="btnVolume">Volumen</button>
+<header>
+    <h1>Simulador de Rutinas de Gimnasio</h1>
+    <p id="userWelcome"></p>
+</header>
 
-        <section id="daysContainer"></section>
+<main class="menu">
+    <a href="pages/login.html">
+        <img src="img/login.png" alt="Login">
+    </a>
 
-        <section id="routineContainer"></section>
+    <a href="pages/strength.html">
+        <img src="img/strength.png" alt="Fuerza">
+    </a>
 
-        <section id="myRoutine">
-            <h2>Mi rutina:</h2>
-            <ul id="userRoutine"></ul>
-        </section>
-    </main>
+    <a href="pages/volume.html">
+        <img src="img/volume.png" alt="Volumen">
+    </a>
 
-    <footer></footer>
+    <a href="pages/routines.html">
+        <img src="img/routines.png" alt="Rutinas">
+    </a>
+</main>
 
-    <script src="js/main.js"></script>
+<script>
+    const user = localStorage.getItem("user");
+
+    if (!user) {
+        window.location.href = "pages/login.html";
+    } else {
+        document.getElementById("userWelcome").textContent =
+            "Bienvenido, " + user;
+    }
+</script>
+
 </body>
 </html>
-

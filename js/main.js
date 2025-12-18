@@ -1,170 +1,169 @@
-const btnStrength = document.getElementById("btnStrength");
-const btnVolume = document.getElementById("btnVolume");
-const daysContainer = document.getElementById("daysContainer");
-const routineContainer = document.getElementById("routineContainer");
-const userRoutineList = document.getElementById("userRoutine");
+let data = {};
+let routine = JSON.parse(localStorage.getItem("routine")) || [];
 
-const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+const groupsContainer = document.getElementById("groupsContainer");
+const exerciseContainer = document.getElementById("exerciseContainer");
+const routineList = document.getElementById("routineList");
+const daySelect = document.getElementById("daySelect");
+const liveTitle = document.getElementById("liveTitle");
+const liveList = document.getElementById("liveList");
 
-const strengthExercises = [
-    { name: "Sentadilla", reps: "6 x 4" },
-    { name: "Press de banca", reps: "6 x 4" },
-    { name: "Peso muerto", reps: "6 x 4" }
-];
+fetch("../data/exercises.json")
+    .then(res => res.json())
+    .then(json => {
+        data = json;
+        init();
+    });
 
-const volumeExercises = [
-    { name: "Aperturas", reps: "12 x 4" },
-    { name: "Press inclinado", reps: "10 x 4" },
-    { name: "Extensiones de tríceps", reps: "15 x 3" }
-];
+function init() {
+    const path = location.pathname;
 
-let userRoutine = JSON.parse(localStorage.getItem("userRoutine")) || [];
-let selectedTraining = null;
+    if (path.includes("strength")) {
+        loadGroups("strength");
+    }
 
-function showDays() {
-    daysContainer.innerHTML = "";
-    daysOfWeek.forEach(day => {
+    if (path.includes("volume")) {
+        loadGroups("volume");
+    }
+
+    if (routineList) {
+        showRoutines();
+    }
+
+    if (daySelect) {
+        daySelect.addEventListener("change", renderLiveRoutine);
+    }
+}
+
+function loadGroups(type) {
+    groupsContainer.innerHTML = "";
+
+    Object.keys(data[type]).forEach(group => {
         const btn = document.createElement("button");
-        btn.textContent = day;
-        btn.classList.add("day-btn");
-        btn.addEventListener("click", () => selectDay(day));
-        daysContainer.appendChild(btn);
+        btn.textContent = group.toUpperCase();
+        btn.onclick = () => loadExercises(type, group);
+        groupsContainer.appendChild(btn);
     });
 }
 
-btnStrength.addEventListener("click", () => {
-    selectedTraining = "strength";
-    showDays();
-    routineContainer.innerHTML = "";
-});
-
-btnVolume.addEventListener("click", () => {
-    selectedTraining = "volume";
-    showDays();
-    routineContainer.innerHTML = "";
-});
-
-function selectDay(day) {
-    routineContainer.innerHTML = `<h3>Día seleccionado: ${day}</h3>`;
-
-    let exercises = [];
-
-    if (selectedTraining === "strength") {
-        exercises = strengthExercises;
-    } else if (selectedTraining === "volume") {
-        exercises = volumeExercises;
-    } else {
-        routineContainer.innerHTML += `<p>Elegí primero Fuerza o Volumen.</p>`;
+function loadExercises(type, group) {
+    if (!daySelect.value) {
+        exerciseContainer.innerHTML = "<p>Seleccioná un día primero</p>";
         return;
     }
 
-    const select = document.createElement("select");
-    select.id = "exerciseSelect";
+    exerciseContainer.innerHTML = `<h3>${group.toUpperCase()}</h3>`;
 
-    exercises.forEach(ex => {
-        const option = document.createElement("option");
-        option.value = ex.name;
-        option.textContent = `${ex.name} (${ex.reps})`;
-        select.appendChild(option);
-    });
+    data[type][group].forEach(ex => {
+        const div = document.createElement("div");
 
-    routineContainer.appendChild(select);
-
-    const addBtn = document.createElement("button");
-    addBtn.textContent = "Agregar ejercicio";
-    addBtn.addEventListener("click", () => {
-        const selectedName = select.value;
-        const selectedExercise = exercises.find(ex => ex.name === selectedName);
-        addExercise(day, selectedExercise);
-    });
-
-    routineContainer.appendChild(addBtn);
-}
-
-function addExercise(day, exercise) {
-    let dayEntry = userRoutine.find(entry => entry.day === day);
-
-    if (!dayEntry) {
-        dayEntry = { day: day, exercises: [] };
-        userRoutine.push(dayEntry);
-    }
-
-    const exists = dayEntry.exercises.some(ex => ex.name === exercise.name);
-
-    if (exists) {
-        alert("Ese ejercicio ya está agregado en este día.");
-        return;
-    }
-
-    dayEntry.exercises.push(exercise);
-
-    saveRoutine();
-    renderRoutine();
-}
-
-function saveRoutine() {
-    localStorage.setItem("userRoutine", JSON.stringify(userRoutine));
-}
-
-function renderRoutine() {
-    userRoutineList.innerHTML = "";
-
-    if (userRoutine.length === 0) {
-        userRoutineList.innerHTML = "<li>No tenés días guardados aún.</li>";
-        return;
-    }
-
-    userRoutine.forEach((entry, index) => {
-        const li = document.createElement("li");
-        li.classList.add("user-day");
-
-        li.innerHTML = `
-            <strong>${entry.day}</strong>:
-            ${entry.exercises.map(ex => `${ex.name} (${ex.reps})`).join(", ")}
-            <button class="btn btn-edit" data-index="${index}">Editar</button>
-            <button class="btn btn-delete" data-index="${index}">Eliminar</button>
+        div.innerHTML = `
+            <p><strong>${ex.name}</strong> (${ex.reps})</p>
+            <button>Agregar</button>
         `;
 
-        userRoutineList.appendChild(li);
+        div.querySelector("button").onclick = () => {
+            routine.push({
+                day: daySelect.value,
+                group,
+                name: ex.name,
+                reps: ex.reps
+            });
+
+            localStorage.setItem("routine", JSON.stringify(routine));
+            renderLiveRoutine();
+            showRecommendations(type, ex.secondary);
+        };
+
+        exerciseContainer.appendChild(div);
+    });
+}
+
+function showRecommendations(type, secondary) {
+    if (!secondary || !secondary.length) return;
+
+    const rec = document.createElement("div");
+    rec.innerHTML = "<h4>Ejercicios recomendados</h4>";
+
+    secondary.forEach(group => {
+        if (data[type][group]) {
+            data[type][group].forEach(ex => {
+                const p = document.createElement("p");
+                p.textContent = `${ex.name} (${group})`;
+                rec.appendChild(p);
+            });
+        }
     });
 
-    userRoutineList.onclick = (e) => {
-        const btn = e.target.closest("button");
-        if (!btn) return;
-
-        const index = Number(btn.dataset.index);
-
-        if (btn.classList.contains("btn-edit")) {
-            editDay(index);
-        }
-
-        if (btn.classList.contains("btn-delete")) {
-            deleteDay(index);
-        }
-    };
+    exerciseContainer.appendChild(rec);
 }
 
-function deleteDay(index) {
-    userRoutine.splice(index, 1);
-    saveRoutine();
-    renderRoutine();
+function renderLiveRoutine() {
+    if (!daySelect.value) return;
+
+    const day = daySelect.value;
+    const dayExercises = routine.filter(ex => ex.day === day);
+
+    liveTitle.textContent = `Tu rutina para ${day}`;
+    liveList.innerHTML = "";
+
+    if (dayExercises.length === 0) {
+        liveList.innerHTML = "<li>No hay ejercicios todavía</li>";
+        return;
+    }
+
+    dayExercises.forEach(ex => {
+        const li = document.createElement("li");
+        li.textContent = `${ex.name} (${ex.group}) - ${ex.reps}`;
+        liveList.appendChild(li);
+    });
 }
 
-function editDay(index) {
-    const entry = userRoutine[index];
-    if (!entry) return;
+function showRoutines() {
+    if (!routine.length) {
+        routineList.innerHTML = "<li>No hay rutinas guardadas</li>";
+        return;
+    }
 
-    const firstExercise = entry.exercises[0]?.name || "";
-    const isStrength = strengthExercises.map(e => e.name).includes(firstExercise);
+    const grouped = {};
 
-    selectedTraining = isStrength ? "strength" : "volume";
+    routine.forEach((item, index) => {
+        if (!grouped[item.day]) grouped[item.day] = [];
+        grouped[item.day].push({ ...item, index });
+    });
 
-    showDays();
-    selectDay(entry.day);
+    routineList.innerHTML = "";
 
-    routineContainer.insertAdjacentHTML("afterbegin",
-        `<p style="color:green">Estás editando <strong>${entry.day}</strong>.</p>`
-    );
+    Object.keys(grouped).forEach(day => {
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            <strong>${day}</strong>
+            <button onclick="deleteDay('${day}')">Eliminar día</button>
+            <ul>
+                ${grouped[day]
+                    .map(ex => `
+                        <li>
+                            ${ex.name} (${ex.group})
+                            <button onclick="deleteExercise(${ex.index})">Eliminar</button>
+                        </li>
+                    `)
+                    .join("")}
+            </ul>
+        `;
+
+        routineList.appendChild(li);
+    });
 }
 
-renderRoutine();
+function deleteExercise(index) {
+    routine.splice(index, 1);
+    localStorage.setItem("routine", JSON.stringify(routine));
+    showRoutines();
+}
+
+function deleteDay(day) {
+    routine = routine.filter(ex => ex.day !== day);
+    localStorage.setItem("routine", JSON.stringify(routine));
+    showRoutines();
+}

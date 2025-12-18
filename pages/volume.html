@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Rutina de Volumen</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Rutina de Volumen</h1>
+    <p id="userWelcome"></p>
+</header>
+
+<main>
+    <label>Día:</label>
+    <select id="daySelect">
+        <option value="">Seleccionar</option>
+        <option>Lunes</option>
+        <option>Martes</option>
+        <option>Miércoles</option>
+        <option>Jueves</option>
+        <option>Viernes</option>
+    </select>
+
+    <section id="groupsContainer"></section>
+    <section id="exerciseContainer"></section>
+
+    <section id="liveRoutine">
+        <h3 id="liveTitle"></h3>
+        <ul id="liveList"></ul>
+    </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script>
+    const user = localStorage.getItem("user");
+
+    if (!user) {
+        window.location.href = "login.html";
+    } else {
+        document.getElementById("userWelcome").textContent =
+            "Bienvenido, " + user;
+    }
+</script>
+
+</body>
+</html>
