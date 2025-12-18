@@ -1,33 +1,35 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="../css/styles.css">
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 
+
 <header>
-    <h1>Ingreso al simulador</h1>
+<header class="page-header">
+    <h1>Login</h1>
+
+    <nav class="text-nav">
+        <a href="../index.html">Inicio</a>
+        <a href="strength.html">Fuerza</a>
+        <a href="volume.html">Volumen</a>
+        <a href="routines.html">Rutinas</a>
+    </nav>
+</header>
 </header>
 
+
 <main>
-    <form id="loginForm">
-        <label>
-            Usuario
-            <input type="text" id="username" required>
-        </label>
-
-        <label>
-            Contraseña
-            <input type="password" id="password" required>
-        </label>
-
-        <button type="submit">Ingresar</button>
-    </form>
-
-    <p id="loginMessage"></p>
+<form id="loginForm">
+<input type="text" id="username" placeholder="Usuario" required>
+<button type="submit">Ingresar</button>
+<p id="loginMessage"></p>
+</form>
 </main>
+
 
 <script src="../js/login.js"></script>
 </body>

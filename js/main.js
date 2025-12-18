@@ -63,6 +63,18 @@ function loadExercises(type, group) {
         `;
 
         div.querySelector("button").onclick = () => {
+            // Validar si ya está en la rutina del mismo día
+            const exists = routine.some(r => 
+                r.day === daySelect.value &&
+                r.group === group &&
+                r.name === ex.name
+            );
+
+            if (exists) {
+                alert("Este ejercicio ya está en tu rutina para este día.");
+                return;
+            }
+
             routine.push({
                 day: daySelect.value,
                 group,

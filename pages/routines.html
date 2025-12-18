@@ -1,32 +1,33 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Rutinas Guardadas</title>
-    <link rel="stylesheet" href="../css/styles.css">
+<meta charset="UTF-8">
+<title>Rutinas</title>
+<link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 
+
 <header>
+<header class="page-header">
     <h1>Rutinas Guardadas</h1>
-    <p id="userWelcome"></p>
+    <p id="userName"></p>
+
+    <nav class="text-nav">
+        <a href="../index.html">Inicio</a>
+        <a href="strength.html">Fuerza</a>
+        <a href="volume.html">Volumen</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
 </header>
 
+
 <main>
-    <ul id="routineList"></ul>
+<ul id="routineList"></ul>
 </main>
 
+
 <script src="../js/main.js"></script>
-<script>
-    const user = localStorage.getItem("user");
-
-    if (!user) {
-        window.location.href = "login.html";
-    } else {
-        document.getElementById("userWelcome").textContent =
-            "Bienvenido, " + user;
-    }
-</script>
-
 </body>
 </html>

@@ -1,48 +1,48 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Rutina de Fuerza</title>
-    <link rel="stylesheet" href="../css/styles.css">
+<meta charset="UTF-8">
+<title>Rutina Fuerza</title>
+<link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 
+
 <header>
+<header class="page-header">
     <h1>Rutina de Fuerza</h1>
-    <p id="userWelcome"></p>
+    <p id="userName"></p>
+
+    <nav class="text-nav">
+        <a href="../index.html">Inicio</a>
+        <a href="volume.html">Volumen</a>
+        <a href="routines.html">Rutinas</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
 </header>
 
+
 <main>
-    <label>Día:</label>
-    <select id="daySelect">
-        <option value="">Seleccionar</option>
-        <option>Lunes</option>
-        <option>Martes</option>
-        <option>Miércoles</option>
-        <option>Jueves</option>
-        <option>Viernes</option>
-    </select>
+<label>Seleccionar día</label>
+<select id="daySelect">
+<option value="">-- Día --</option>
+<option>Lunes</option><option>Martes</option><option>Miércoles</option>
+<option>Jueves</option><option>Viernes</option><option>Sábado</option>
+</select>
 
-    <section id="groupsContainer"></section>
-    <section id="exerciseContainer"></section>
 
-    <section id="liveRoutine">
-        <h3 id="liveTitle"></h3>
-        <ul id="liveList"></ul>
-    </section>
+<section id="groupsContainer"></section>
+<section id="exerciseContainer"></section>
+
+
+<section>
+<h3 id="liveTitle"></h3>
+<ul id="liveList"></ul>
+</section>
 </main>
 
+
 <script src="../js/main.js"></script>
-<script>
-    const user = localStorage.getItem("user");
-
-    if (!user) {
-        window.location.href = "login.html";
-    } else {
-        document.getElementById("userWelcome").textContent =
-            "Bienvenido, " + user;
-    }
-</script>
-
 </body>
 </html>

@@ -4,35 +4,13 @@ body {
     background: #f4f4f4;
 }
 
-header {
-    background: #222;
-    color: white;
-    padding: 20px;
-    text-align: center;
+ul {
+    list-style: none;
+    padding-left: 0;
 }
 
-main {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-}
-
-.menu {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-}
-
-.menu img {
-    width: 100%;
-    cursor: pointer;
-}
-
-section {
-    background: white;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 6px;
+li {
+    margin-bottom: 8px;
 }
 
 button {
@@ -42,24 +20,66 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 5px;
 }
 
 button:hover {
     background: #0056b3;
 }
 
-button {
-    margin-left: 5px;
-    cursor: pointer;
+input[type="text"], input[type="password"], select {
+    padding: 8px;
+    width: 200px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
-ul {
-    list-style: none;
-    padding-left: 0;
+form button {
+    padding: 8px 15px;
 }
 
-li {
-    margin-bottom: 8px;
+#exerciseContainer div {
+    margin-bottom: 10px;
+}
+
+h3, h4 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 5px 0;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+#userName {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+section {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
 }
 
 #liveRoutine {
@@ -73,12 +93,116 @@ li {
     margin-bottom: 10px;
 }
 
-.menu img {
-    width: 200px;
+.page-header {
+    background: #222;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.page-header h1 {
+    margin-bottom: 10px;
+}
+
+.text-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.text-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.text-nav a:hover {
+    text-decoration: underline;
+}
+
+.index-header {
+    background: #222;
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.index-header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.login-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.login-btn:hover {
+    background: #0056b3;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 80px auto;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #222;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%; 
+}
+
+.menu-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
 }
 
-#userWelcome {
-    font-size: 14px;
-    opacity: 0.8;
+.menu-item span {
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.menu-item:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 900px) {
+    .menu {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .menu {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin: 40px 10px;
+    }
+
+    .menu-item span {
+        font-size: 1em;
+    }
 }

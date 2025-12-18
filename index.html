@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Simulador Gym</title>
@@ -7,38 +7,33 @@
 </head>
 <body>
 
-<header>
-    <h1>Simulador de Rutinas de Gimnasio</h1>
-    <p id="userWelcome"></p>
+<header class="index-header">
+    <h1>💪 GymMaster - Simulador de Rutinas 💪</h1>
+    <a href="pages/login.html" class="login-btn">Login</a>
 </header>
 
 <main class="menu">
-    <a href="pages/login.html">
-        <img src="img/login.png" alt="Login">
-    </a>
-
-    <a href="pages/strength.html">
+    <a href="pages/strength.html" class="menu-item">
         <img src="img/strength.png" alt="Fuerza">
+        <span>Fuerza</span>
     </a>
 
-    <a href="pages/volume.html">
+    <a href="pages/volume.html" class="menu-item">
         <img src="img/volume.png" alt="Volumen">
+        <span>Volumen</span>
     </a>
 
-    <a href="pages/routines.html">
+    <a href="pages/routines.html" class="menu-item">
         <img src="img/routines.png" alt="Rutinas">
+        <span>Rutinas</span>
     </a>
 </main>
 
 <script>
-    const user = localStorage.getItem("user");
-
-    if (!user) {
-        window.location.href = "pages/login.html";
-    } else {
-        document.getElementById("userWelcome").textContent =
-            "Bienvenido, " + user;
-    }
+const user = localStorage.getItem("user");
+if (user) {
+    console.log(`Usuario logueado: ${user}`);
+}
 </script>
 
 </body>
